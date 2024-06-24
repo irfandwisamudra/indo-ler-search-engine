@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Results</title>
+  </head>
+  <body>
+    <h1>Search Results</h1>
+    {% if results %}
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Text</th>
+          <th>Verdict</th>
+          <th>Indictment</th>
+          <th>Lawyer</th>
+          <th>Owner</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in results %}
+        <tr>
+          <td>
+            <a href="{{ url_for('details', doc_id=result.id) }}"
+              >{{ result.id }}</a
+            >
+          </td>
+          <td>
+            {{ result.text[:200] }}{{ '...' if result.text|length > 200 else ''
+            }}
+          </td>
+          <td>{{ result.verdict }}</td>
+          <td>{{ result.indictment }}</td>
+          <td>{{ result.lawyer }}</td>
+          <td>{{ result.owner }}</td>
+          <td>{{ result.score }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+  </body>
+</html>

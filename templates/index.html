@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+  </head>
+  <body>
+    <h1>Search</h1>
+    <form action="/query" method="post">
+      <label for="query">Enter your query:</label>
+      <input type="text" id="query" name="query" required />
+      <br />
+      <label for="count">Number of results:</label>
+      <select id="count" name="count">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="All">All</option>
+      </select>
+      <br />
+      <input type="submit" value="Search" />
+    </form>
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %}
+  </body>
+</html>
