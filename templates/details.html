@@ -44,34 +44,52 @@
             <div class="mt-4 mb-8">
               <div class="flex flex-col space-y-4">
                 <div class="flex flex-col space-y-2">
-                  <h3 class="text-xl font-semibold">Putusan</h3>
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-white"
+                  >
+                    Putusan
+                  </h3>
                   <p class="text-gray-700 dark:text-gray-300 capitalize">
                     {{ result.verdict }}
                   </p>
                 </div>
                 <div class="flex flex-col space-y-2">
-                  <h3 class="text-xl font-semibold">Dakwaan</h3>
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-white"
+                  >
+                    Dakwaan
+                  </h3>
                   <p class="text-gray-700 dark:text-gray-300 capitalize">
                     {{ result.indictment }}
                   </p>
                 </div>
                 <div class="flex flex-col space-y-2">
-                  <h3 class="text-xl font-semibold">Pengacara</h3>
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-white"
+                  >
+                    Pengacara
+                  </h3>
                   <p class="text-gray-700 dark:text-gray-300 capitalize">
                     {{ 'Ada' if result.lawyer else 'Tidak Ada' }}
                   </p>
                 </div>
                 <div class="flex flex-col space-y-2">
-                  <h3 class="text-xl font-semibold">Pemilik</h3>
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-white"
+                  >
+                    Pemilik
+                  </h3>
                   <p class="text-gray-700 dark:text-gray-300 capitalize">
                     {{ result.owner }}
                   </p>
                 </div>
                 <div class="flex flex-col space-y-2">
-                  <h3 class="text-xl font-semibold">Teks</h3>
-                  <p
-                    class="text-gray-700 dark:text-gray-300 text-justify"
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-white"
                   >
+                    Teks
+                  </h3>
+                  <p class="text-gray-700 dark:text-gray-300 text-justify">
                     {{ result.text }}
                   </p>
                 </div>
