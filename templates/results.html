@@ -122,22 +122,22 @@
                           > 200 else '' }}
                         </td>
                         <td
-                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400 capitalize"
                         >
                           {{ result.verdict }}
                         </td>
                         <td
-                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400 capitalize"
                         >
                           {{ result.indictment }}
                         </td>
                         <td
-                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400 capitalize"
                         >
-                          {{ result.lawyer }}
+                          {{ 'Ada' if result.lawyer else 'Tidak Ada' }}
                         </td>
                         <td
-                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400 capitalize"
                         >
                           {{ result.owner }}
                         </td>

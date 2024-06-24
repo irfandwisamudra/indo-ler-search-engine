@@ -1,17 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document Details</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Detail Dokumen | IndonesianLER</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/css/output.css')}}"
+    />
+    <script>
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
   </head>
-  <body>
-    <h1>Document Details</h1>
-    <p><strong>ID:</strong> {{ result.id }}</p>
-    <p><strong>Text:</strong> {{ result.text }}</p>
-    <p><strong>Verdict:</strong> {{ result.verdict }}</p>
-    <p><strong>Indictment:</strong> {{ result.indictment }}</p>
-    <p><strong>Lawyer:</strong> {{ result.lawyer }}</p>
-    <p><strong>Owner:</strong> {{ result.owner }}</p>
+
+  <body class="bg-slate-100 dark:bg-gray-900">
+    {% include 'layouts/navbar.html' %}
+
+    <div class="min-h-screen flex flex-col justify-between">
+      <main class="flex flex-col items-center pt-16 mb-12">
+        <div class="container xl:max-w-screen-xl p-4 text-center">
+          <div class="mt-4 mb-8">
+            <h2
+              class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+            >
+              Detail Dokumen
+            </h2>
+            <p
+              class="mb-4 font-semibold text-slate-700 lg:text-lg dark:text-slate-400"
+            >
+              Berikut adalah detail dari dokumen hukum dengan ID {{ result.id
+              }}.
+            </p>
+
+            <div class="mt-4 mb-8">
+              <div class="flex flex-col space-y-4">
+                <div class="flex flex-col space-y-2">
+                  <h3 class="text-xl font-semibold">Putusan</h3>
+                  <p class="text-gray-700 dark:text-gray-300 capitalize">
+                    {{ result.verdict }}
+                  </p>
+                </div>
+                <div class="flex flex-col space-y-2">
+                  <h3 class="text-xl font-semibold">Dakwaan</h3>
+                  <p class="text-gray-700 dark:text-gray-300 capitalize">
+                    {{ result.indictment }}
+                  </p>
+                </div>
+                <div class="flex flex-col space-y-2">
+                  <h3 class="text-xl font-semibold">Pengacara</h3>
+                  <p class="text-gray-700 dark:text-gray-300 capitalize">
+                    {{ 'Ada' if result.lawyer else 'Tidak Ada' }}
+                  </p>
+                </div>
+                <div class="flex flex-col space-y-2">
+                  <h3 class="text-xl font-semibold">Pemilik</h3>
+                  <p class="text-gray-700 dark:text-gray-300 capitalize">
+                    {{ result.owner }}
+                  </p>
+                </div>
+                <div class="flex flex-col space-y-2">
+                  <h3 class="text-xl font-semibold">Teks</h3>
+                  <p
+                    class="text-gray-700 dark:text-gray-300 text-justify"
+                  >
+                    {{ result.text }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {% include 'layouts/footer.html' %}
+    </div>
+
+    <script src="{{ url_for('static', filename='dist/js/script.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   </body>
 </html>
