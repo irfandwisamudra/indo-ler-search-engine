@@ -54,7 +54,7 @@ def search():
             }
             results.append(result)
 
-        return render_template('results.html', results=results)
+        return render_template('results.html', results=results, query=user_query)
     except Exception as e:
         print(f"Error: {e}")
         return render_template('index.html', error="Error occurred while fetching results.")

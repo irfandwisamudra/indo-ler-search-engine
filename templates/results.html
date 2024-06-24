@@ -1,48 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Results</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hasil Pencarian | IndonesianLER</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css"
+    />
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/css/output.css')}}"
+    />
+    <script>
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
   </head>
-  <body>
-    <h1>Search Results</h1>
-    {% if results %}
-    <table border="1">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Text</th>
-          <th>Verdict</th>
-          <th>Indictment</th>
-          <th>Lawyer</th>
-          <th>Owner</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for result in results %}
-        <tr>
-          <td>
-            <a href="{{ url_for('details', doc_id=result.id) }}"
-              >{{ result.id }}</a
+
+  <body class="bg-slate-100 dark:bg-gray-900">
+    {% include 'layouts/navbar.html' %}
+
+    <div class="min-h-screen flex flex-col justify-between">
+      <main class="flex flex-col items-center pt-16 mb-12">
+        <div class="container xl:max-w-screen-xl p-4 text-center">
+          <div class="mt-4 mb-8">
+            <h2
+              class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
             >
-          </td>
-          <td>
-            {{ result.text[:200] }}{{ '...' if result.text|length > 200 else ''
-            }}
-          </td>
-          <td>{{ result.verdict }}</td>
-          <td>{{ result.indictment }}</td>
-          <td>{{ result.lawyer }}</td>
-          <td>{{ result.owner }}</td>
-          <td>{{ result.score }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <p>No results found.</p>
-    {% endif %}
+              Hasil Pencarian
+            </h2>
+            {% if results %}
+            <p
+              class="mb-4 font-semibold text-slate-700 lg:text-lg dark:text-slate-400"
+            >
+              Berikut adalah hasil pencarian dari dokumen hukum yang mengandung
+              "{{ query }}", silakan klik ID dokumen untuk melihat detailnya.
+            </p>
+
+            <div class="flex flex-col mt-4">
+              <div class="min-w-full align-middle">
+                <div class="overflow-x-auto">
+                  <table
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-600 display"
+                    id="result-table"
+                  >
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          ID
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          TEKS
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          PUTUSAN
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          DAKWAAN
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          PENGACARA
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          PEMILIK
+                        </th>
+                        <th
+                          scope="col"
+                          class="p-4 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-white"
+                        >
+                          SKOR
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800">
+                      {% for result in results %}
+                      <tr>
+                        <td
+                          class="p-4 text-sm font-semibold text-gray-900 dark:text-white underline"
+                        >
+                          <a href="{{ url_for('details', doc_id=result.id) }}"
+                            >{{ result.id }}</a
+                          >
+                        </td>
+                        <td
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          {{ result.text[:200] }}{{ '...' if result.text|length
+                          > 200 else '' }}
+                        </td>
+                        <td
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          {{ result.verdict }}
+                        </td>
+                        <td
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          {{ result.indictment }}
+                        </td>
+                        <td
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          {{ result.lawyer }}
+                        </td>
+                        <td
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          {{ result.owner }}
+                        </td>
+                        <td
+                          class="p-4 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          {{ result.score }}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <p
+              class="mb-4 font-semibold text-slate-700 lg:text-lg dark:text-slate-400"
+            >
+              Tidak ada hasil yang ditemukan dari dokumen hukum yang mengandung
+              "{{ query }}". Silakan coba kata kunci lain.
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </main>
+
+      {% include 'layouts/footer.html' %}
+    </div>
+
+    <script>
+      let table = $("#result-table").DataTable({
+        paging: true,
+        searching: true,
+        ordering: true,
+        order: [],
+        info: true,
+        autoWidth: false,
+        responsive: true,
+        lengthChange: false,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Cari dokumen hukum...",
+          lengthMenu: "Tampilkan _MENU_ data per halaman",
+          zeroRecords: "Data tidak ditemukan",
+          info: "Menampilkan halaman _PAGE_ dari _PAGES_",
+          infoEmpty: "Data tidak tersedia",
+          infoFiltered: "(difilter dari _MAX_ total data)",
+        },
+      });
+    </script>
+
+    <script src="{{ url_for('static', filename='dist/js/script.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   </body>
 </html>
