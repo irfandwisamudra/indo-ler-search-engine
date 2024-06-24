@@ -21,24 +21,24 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/query', methods=['POST'])
-def query():
+@app.route('/search', methods=['POST'])
+def search():
     try:
-        user_query = request.form['query']
-        count = request.form.get('count', '10')  # Jika tidak ada jumlah yang diminta, maka defaultnya adalah 10
+        user_query = request.form['search']
+        rank = request.form.get('rank', '10')  # Jika tidak ada jumlah yang diminta, maka defaultnya adalah 10
         tokenized_query = user_query.split()
         scores = bm25.get_scores(tokenized_query)
 
-        if count == 'All':
-            count = len(scores)
+        if rank == 'All':
+            rank = len(scores)
         else:
-            count = int(count)
+            rank = int(rank)
 
         # Mengurutkan skor dari tertinggi ke terendah
         valid_scores_idxs = [idx for idx in scores.argsort()[::-1] if scores[idx] > 0]
 
         # Mengambil dokumen dengan skor tertinggi
-        best_idxs = valid_scores_idxs[:count]
+        best_idxs = valid_scores_idxs[:rank]
         results = []
 
         for idx in best_idxs:
